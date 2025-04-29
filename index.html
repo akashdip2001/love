@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For You</title>
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(to top right, #ffdde1, #ee9ca7);
+      overflow: hidden;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #fff;
+    }
+
+    .heart-container {
+      position: relative;
+      width: 100px;
+      height: 90px;
+      animation: pulse 1.5s infinite;
+      cursor: pointer;
+    }
+
+    .heart {
+      position: absolute;
+      width: 100px;
+      height: 90px;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 100px;
+      height: 160px;
+      background: red;
+      border-radius: 100px 100px 0 0;
+      transform: rotate(-45deg);
+      transform-origin: 0 100%;
+    }
+
+    .heart::after {
+      left: 100px;
+      transform: rotate(45deg);
+      transform-origin: 100% 100%;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    .hidden-message {
+      position: absolute;
+      bottom: 50px;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 20px 30px;
+      border-radius: 20px;
+      font-size: 1.5rem;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .hidden-message.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="heart-container" onclick="revealMessage()">
+    <div class="heart"></div>
+  </div>
+
+  <div class="hidden-message" id="secretMessage">
+    You will never find a heart that loves you more than mine
+  </div>
+
+  <script>
+    function revealMessage() {
+      document.getElementById('secretMessage').classList.add('show');
+    }
+  </script>
+
+</body>
+</html>
