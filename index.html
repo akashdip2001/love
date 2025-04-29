@@ -9,11 +9,12 @@
       margin: 0;
       padding: 0;
       background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      font-family: 'Segoe UI', sans-serif;
+      height: 100vh;
+      overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      font-family: 'Segoe UI', sans-serif;
     }
 
     .container {
@@ -22,54 +23,119 @@
     }
 
     .heart {
-      width: 200px;
+      width: 150px;
       cursor: pointer;
       animation: beat 1s infinite;
+      transition: all 0.8s ease;
+      position: relative;
+      z-index: 2;
     }
 
     @keyframes beat {
-      0%, 100% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.1);
-      }
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
     }
 
-    .hidden-message {
-      margin-top: 30px;
-      opacity: 0;
-      transform: translateY(20px);
-      background: rgba(0, 0, 0, 0.6);
-      color: white;
-      padding: 20px 30px;
+    .chat-box {
+      position: absolute;
+      background: #fff;
       border-radius: 20px;
-      font-size: 1.5rem;
-      display: inline-block;
-      max-width: 90%;
-      transition: opacity 0.8s ease, transform 0.8s ease;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      max-width: 320px;
+      width: 90%;
+      padding: 20px;
+      display: none;
+      flex-direction: column;
+      font-size: 14px;
+      z-index: 1;
+      animation: fadeInUp 0.8s ease forwards;
     }
 
-    .hidden-message.show {
-      opacity: 1;
-      transform: translateY(0);
+    .chat-box.show {
+      display: flex;
+    }
+
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .chat-header {
+      font-weight: bold;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .chat-message {
+      background: #f1f0f0;
+      border-radius: 15px;
+      padding: 10px 15px;
+      margin: 5px 0;
+      max-width: 80%;
+      animation: slideIn 0.5s ease;
+    }
+
+    .chat-message.user {
+      align-self: flex-end;
+      background: #d1ffd6;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateY(10px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @media (min-width: 768px) {
+      .chat-box {
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      .heart.clicked {
+        position: absolute;
+        left: 10%;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+
+    @media (max-width: 767px) {
+      .chat-box {
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .heart.clicked {
+        position: absolute;
+        top: 20%;
+        left: 50%;
+        transform: translateX(-50%);
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <svg class="heart" onclick="revealMessage()" viewBox="0 0 512 512" fill="red" xmlns="http://www.w3.org/2000/svg">
+    <svg class="heart" onclick="startChat()" viewBox="0 0 512 512" fill="red" xmlns="http://www.w3.org/2000/svg">
       <path d="M471.7 73.1c-54.5-46.4-136-38.3-186.4 13.7L256 116.3l-29.3-29.5c-50.4-52-131.9-60.1-186.4-13.7-62 52.8-66.1 149.8-9.9 207.9l193.5 199.8c12 12.4 31.5 12.4 43.5 0l193.5-199.8c56.2-58.1 52.1-155.1-9.9-207.9z"/>
     </svg>
 
-    <div class="hidden-message" id="secretMessage">
-      You will never find a heart that loves you more than mine
+    <div class="chat-box" id="chatBox">
+      <div class="chat-header">my love <span style="color: green; font-size: 12px;">• online</span></div>
+      <div class="chat-message">Can you love me ?</div>
+      <div class="chat-message user">You will never find a heart that loves you more than mine</div>
     </div>
   </div>
 
   <script>
-    function revealMessage() {
-      document.getElementById('secretMessage').classList.add('show');
+    function startChat() {
+      const heart = document.querySelector('.heart');
+      const chatBox = document.getElementById('chatBox');
+
+      heart.classList.add('clicked');
+      setTimeout(() => {
+        chatBox.classList.add('show');
+      }, 600); // Delay to simulate chat opening
     }
   </script>
 </body>
