@@ -1,70 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>For You</title>
   <style>
     body {
       margin: 0;
-      background: linear-gradient(to top right, #ffdde1, #ee9ca7);
-      overflow: hidden;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 0;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
     }
 
-    .heart-container {
+    .container {
       position: relative;
-      width: 100px;
-      height: 90px;
-      animation: pulse 1.5s infinite;
-      cursor: pointer;
+      text-align: center;
     }
 
     .heart {
-      position: absolute;
-      width: 100px;
-      height: 90px;
+      width: 200px;
+      cursor: pointer;
+      animation: beat 1s infinite;
     }
 
-    .heart::before,
-    .heart::after {
-      content: "";
-      position: absolute;
-      width: 100px;
-      height: 160px;
-      background: red;
-      border-radius: 100px 100px 0 0;
-      transform: rotate(-45deg);
-      transform-origin: 0 100%;
-    }
-
-    .heart::after {
-      left: 100px;
-      transform: rotate(45deg);
-      transform-origin: 100% 100%;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.2); }
-      100% { transform: scale(1); }
+    @keyframes beat {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1);
+      }
     }
 
     .hidden-message {
-      position: absolute;
-      bottom: 50px;
+      margin-top: 30px;
+      opacity: 0;
+      transform: translateY(20px);
       background: rgba(0, 0, 0, 0.6);
+      color: white;
       padding: 20px 30px;
       border-radius: 20px;
       font-size: 1.5rem;
-      text-align: center;
-      opacity: 0;
-      transform: translateY(20px);
+      display: inline-block;
+      max-width: 90%;
       transition: opacity 0.8s ease, transform 0.8s ease;
     }
 
@@ -75,13 +57,14 @@
   </style>
 </head>
 <body>
+  <div class="container">
+    <svg class="heart" onclick="revealMessage()" viewBox="0 0 512 512" fill="red" xmlns="http://www.w3.org/2000/svg">
+      <path d="M471.7 73.1c-54.5-46.4-136-38.3-186.4 13.7L256 116.3l-29.3-29.5c-50.4-52-131.9-60.1-186.4-13.7-62 52.8-66.1 149.8-9.9 207.9l193.5 199.8c12 12.4 31.5 12.4 43.5 0l193.5-199.8c56.2-58.1 52.1-155.1-9.9-207.9z"/>
+    </svg>
 
-  <div class="heart-container" onclick="revealMessage()">
-    <div class="heart"></div>
-  </div>
-
-  <div class="hidden-message" id="secretMessage">
-    You will never find a heart that loves you more than mine
+    <div class="hidden-message" id="secretMessage">
+      You will never find a heart that loves you more than mine
+    </div>
   </div>
 
   <script>
@@ -89,6 +72,5 @@
       document.getElementById('secretMessage').classList.add('show');
     }
   </script>
-
 </body>
 </html>
